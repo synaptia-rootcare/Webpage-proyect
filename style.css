@@ -1,0 +1,79 @@
+:root{--bg:#0b0f1a;--card:#101728;--muted:#94a3b8;--text:#e6edf6;--brand:#6ee7b7;--brand-2:#60a5fa;--ring:rgba(110,231,183,.35)}
+*{box-sizing:border-box}
+html,body{-webkit-text-size-adjust:100%}
+img,video{max-width:100%;display:block;border-radius:12px}
+a{color:inherit;text-decoration:none}
+.container{width:min(1200px,92%);margin-inline:auto}
+
+/* nav básico */
+.nav-links{display:flex;gap:1rem;align-items:center}
+.nav-toggle{display:none;background:#121a2f;border:1px solid #1f2942;border-radius:10px;padding:.45rem .6rem;color:var(--text)}
+@media (max-width:920px){
+  .nav{gap:.6rem}
+  .nav-toggle{display:inline-flex}
+  .nav-links{display:none;flex-direction:column;align-items:flex-start;gap:.6rem;position:absolute;right:1rem;top:60px;background:#0f172a;border:1px solid #1e2a46;padding:.8rem;border-radius:12px;z-index:20}
+  .nav-links.open{display:flex}
+}
+
+/* ===== Ecosystem (fijo) ===== */
+.ecosistema-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+@media (max-width:600px){.ecosistema-grid{grid-template-columns:1fr 1fr}}
+.eco-tile{
+  position:relative; cursor:pointer; overflow:hidden;
+  aspect-ratio:16/10; border:1px solid #1e2a46; border-radius:12px; background:#0f172a;
+  background-size:cover;           /* no se repite */
+  background-position:center;
+  background-repeat:no-repeat;
+}
+.eco-tile picture,.eco-tile img{   /* para tiles que usan <img>/<picture> */
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1;
+}
+
+/* capa de descripción */
+.eco-desc{
+  position:absolute; inset:0; display:none; z-index:2;
+  padding:12px; text-align:center; background:#0f172a; color:var(--text);
+  border:1px solid #1e2a46; align-items:center; justify-content:center; flex-direction:column;
+}
+.eco-desc h4{margin:.2rem 0 .4rem;font-size:1.05rem}
+.eco-desc p{margin:0;color:var(--muted);font-size:.95rem}
+
+/* mostrar texto solo cuando se hace clic */
+.eco-tile[data-state="desc"] .eco-desc{display:flex!important}
+.eco-tile[data-state="desc"] picture,
+.eco-tile[data-state="desc"] img{display:none!important}
+.eco-tile[data-state="desc"]{background-image:none!important}
+
+/* desactiva cualquier hover antiguo */
+#eco-pop{display:none!important}
+.eco-tile:hover::before,.eco-tile:hover::after,.eco-tile::before,.eco-tile::after{content:none!important;display:none!important}
+.eco-tile:hover .eco-desc{display:none!important}
+/* Rich overlay: better spacing and scroll if content is long */
+.eco-desc{gap:.4rem; line-height:1.35; padding:16px; overflow:auto}
+.eco-desc h4{font-size:1.1rem}
+.eco-desc .list{text-align:left; list-style:disc; padding-left:1.1rem; color:var(--muted)}
+/* Lock: cuando está en modo descripción no se esconde aunque haya hover */
+.eco-tile[data-state="desc"] .eco-desc{
+  display:flex !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  z-index:2;
+}
+.eco-tile[data-state="desc"]:hover .eco-desc{
+  display:flex !important;
+}
+
+/* Apaga cualquier overlay/tooltip por hover del tema antiguo */
+.eco-tile:hover::before,
+.eco-tile:hover::after{
+  content:none !important;
+  display:none !important;
+}
+#eco-pop{display:none !important}
+
+/* Asegura imagen detrás y sin repetición */
+.eco-tile{
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:center;
+}
